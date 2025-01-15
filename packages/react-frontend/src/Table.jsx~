@@ -1,5 +1,5 @@
 
-function TableHeader() {
+n TableHeader() {
 	  return (
 		      <thead>
 		        <tr>
