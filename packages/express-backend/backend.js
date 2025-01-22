@@ -13,6 +13,10 @@ app.listen(port, () => {
 		    );
 });
 
+const generateId = () => {
+	  return Math.random().toString(36).substr(2, 6);
+};
+
 const findUserByName = (name) => {
 		  return users["users_list"].filter(
 			  		      (user) => user["name"] === name
@@ -58,14 +62,15 @@ const findUsersByNameAndJob = (name, job) => {
 
 
 const addUser = (user) => {
-		  users["users_list"].push(user);
-		  return user;
+	const newUser = { id: generateId(), ...user };
+	  users["users_list"].push(newUser);
+	  return newUser;
 };
 
 app.post("/users", (req, res) => {
 		  const userToAdd = req.body;
-		  addUser(userToAdd);
-		  res.send();
+		  const newUser = addUser(userToAdd);
+		  res.status(201).send(newUser);
 });
 
 
@@ -88,6 +93,7 @@ app.delete("/users/:id", (req, res) => {
 			        res.status(404).send("User not found.");
 			      }
 });
+
 
 const users = {
 	  users_list: [
