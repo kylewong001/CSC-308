@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "./Table";
 import Form from "./Form";
 
@@ -17,16 +17,22 @@ function MyApp() {
 		  setCharacters([...characters, person]);
 	}
 
+	useEffect(() => {
+		  fetchUsers()
+			  .then((res) => res.json())
+			  .then((json) => setCharacters(json["users_list"]))
+			  .catch((error) => { console.log(error); });
+	}, [] );
+
 return (
 	  <div className="container">
 	    <Table
 	      characterData={characters}
 	      removeCharacter={removeOneCharacter}
 	    />
-	    <Form />
-	  </div>
+	<Form handleSubmit={updateList} />  
+	</div>
 );
 	
-
 }
 export default MyApp;
